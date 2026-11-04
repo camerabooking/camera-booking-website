@@ -711,4 +711,287 @@ This is a draft, not a final legal contract.`;
 
     if ($("bookingDate")) {
       const today = new Date();
-    
+
+             today.setHours(0, 0, 0, 0);
+      $("bookingDate").min = today.toISOString().split("T")[0];
+    }
+
+    await loadCustomerBookings();
+  }
+
+  /* =========================================
+     CUSTOMER BOOKINGS
+     ========================================= */
+
+  async function loadCustomerBookings() {
+    try {
+      const data = await request("/api/bookings/mine", null, "GET");
+      const bookings = Array.isArray(data) ? data : (data.bookings || []);
+      allBookings = bookings;
+      renderBookingList("customerBookings", bookings);
+    } catch (error) {
+      console.error("Customer bookings:", error);
+    }
+  }
+
+  function renderBookingList(elementId, bookings) {
+    const container = $(elementId);
+    if (!container) return;
+
+    if (!bookings.length) {
+      container.innerHTML = "<p>No bookings found yet.</p>";
+      return;
+    }
+
+    container.innerHTML = bookings.map(booking => `
+      <div class="card pad">
+        <h3>${escapeHtml(booking.service || "Booking")}</h3>
+        <p>Booking ID: ${escapeHtml(booking.id)}</p>
+        <p>Date: ${escapeHtml(booking.event_date || "")}</p>
+        <p>City: ${escapeHtml(booking.city || "")}</p>
+        <p>Venue: ${escapeHtml(booking.venue || "")}</p>
+        <p>Status: ${escapeHtml(booking.status || "pending")}</p>
+      </div>
+    `).join("");
+  }
+
+  /* =========================================
+     CREATE BOOKING
+     ========================================= */
+
+  async function submitBooking() {
+    const button = $("createBooking");
+
+    try {
+      if (!token) {
+        showTab("customer");
+        openModal();
+        message("Please login before booking.");
+        return;
+      }
+
+      if (!selectedService) {
+        throw new Error("Please select a service first.");
+      }
+
+      const eventDate = $("bookingDate")?.value || "";
+      const city = $("bookingCity")?.value.trim() || "";
+      const venue = $("bookingVenue")?.value.trim() || "";
+      const notes = $("bookingNotes")?.value.trim() || "";
+
+      if (!eventDate) throw new Error("Please select event date.");
+      if (city.length < 2) throw new Error("Enter your city.");
+      if (venue.length < 2) throw new Error("Enter your event venue or address.");
+
+      setButtonLoading(button, true, "Submit Booking");
+
+      const data = await request("/api/bookings", {
+        service: selectedService.name,
+        event_date: eventDate,
+        city,
+        venue,
+        customer_name: me?.name || "",
+        customer_phone: me?.phone || "",
+        notes
+      });
+
+      toast(data.message || "Booking submitted successfully.");
+
+      if ($("bookingNotes")) $("bookingNotes").value = "";
+
+      await loadCustomerBookings();
+
+    } catch (error) {
+      toast(error.message);
+    } finally {
+      setButtonLoading(button, false, "Submit Booking");
+    }
+  }
+
+  /* =========================================
+     PARTNER DASHBOARD
+     ========================================= */
+
+  async function partnerDashboard() {
+    showDashboard(
+      "Partner Dashboard",
+      "Welcome " + (me.name || "") + " · " + (me.phone || "")
+    );
+
+    $("partnerDash")?.classList.remove("hidden");
+
+    if ($("partnerProfile")) {
+      $("partnerProfile").textContent =
+        (me.name || "") + " · " + (me.city || "");
+    }
+
+    try {
+      const data = await request("/api/partner/bookings", null, "GET");
+      const bookings = Array.isArray(data) ? data : (data.bookings || []);
+      renderBookingList("partnerBookings", bookings);
+    } catch (error) {
+      toast(error.message);
+    }
+
+    try {
+      const data = await request("/api/partner/payments", null, "GET");
+      const payments = Array.isArray(data) ? data : (data.payments || []);
+      const container = $("partnerPayments");
+
+      if (container) {
+        container.innerHTML = payments.length
+          ? payments.map(payment => `
+              <div class="card pad">
+                <p>Booking: ${escapeHtml(payment.booking_id)}</p>
+                <p>Amount: ${money(payment.amount)}</p>
+                <p>Date: ${escapeHtml(payment.paid_at || "")}</p>
+              </div>
+            `).join("")
+          : "<p>No payment records found.</p>";
+      }
+    } catch (error) {
+      console.error("Partner payments:", error);
+    }
+  }
+
+  /* =========================================
+     ADMIN DASHBOARD
+     ========================================= */
+
+  async function adminDashboard() {
+    showDashboard(
+      "Admin Dashboard",
+      "Administrator · " + (me.email || "")
+    );
+
+    $("adminDash")?.classList.remove("hidden");
+
+    try {
+      const [bookingData, partnerData] = await Promise.all([
+        request("/api/admin/bookings", null, "GET"),
+        request("/api/admin/partners", null, "GET")
+      ]);
+
+      allBookings = Array.isArray(bookingData)
+        ? bookingData
+        : (bookingData.bookings || []);
+
+      allPartners = Array.isArray(partnerData)
+        ? partnerData
+        : (partnerData.partners || []);
+
+      updateAdminStats();
+      renderAdminBookings();
+      renderAdminPartners();
+
+    } catch (error) {
+      toast(error.message);
+    }
+  }
+
+  function updateAdminStats() {
+    const total = allBookings.length;
+    const pending = allBookings.filter(
+      booking => booking.status === "pending"
+    ).length;
+
+    const customers = new Set(
+      allBookings.map(booking => booking.customer_id)
+    ).size;
+
+    if ($("adminTotalBookings")) $("adminTotalBookings").textContent = total;
+    if ($("adminPendingBookings")) $("adminPendingBookings").textContent = pending;
+    if ($("adminTotalCustomers")) $("adminTotalCustomers").textContent = customers;
+    if ($("adminTotalPartners")) $("adminTotalPartners").textContent = allPartners.length;
+    if ($("adminTotalRevenue")) $("adminTotalRevenue").textContent = "Not available";
+    if ($("adminPendingPayments")) $("adminPendingPayments").textContent = "Not available";
+  }
+
+  function renderAdminBookings() {
+    renderBookingList("adminBookings", allBookings);
+  }
+
+  function renderAdminPartners() {
+    const container = $("adminPartners");
+    if (!container) return;
+
+    if (!allPartners.length) {
+      container.innerHTML = "<p>No partner applications found.</p>";
+      return;
+    }
+
+    container.innerHTML = allPartners.map(partner => `
+      <div class="card pad">
+        <h3>${escapeHtml(partner.name || "Partner")}</h3>
+        <p>Mobile: ${escapeHtml(partner.phone || "")}</p>
+        <p>Email: ${escapeHtml(partner.email || "")}</p>
+        <p>City: ${escapeHtml(partner.city || "")}</p>
+        <p>Status: ${escapeHtml(partner.status || "pending")}</p>
+
+        <button class="btn"
+          type="button"
+          data-approve-partner="${escapeHtml(partner.id)}">
+          Approve
+        </button>
+
+        <button class="btn outline"
+          type="button"
+          data-reject-partner="${escapeHtml(partner.id)}">
+          Reject
+        </button>
+      </div>
+    `).join("");
+  }
+
+  /* =========================================
+     ADMIN ACTIONS
+     ========================================= */
+
+  async function updatePartnerStatus(id, status) {
+    try {
+      await request(
+        "/api/admin/partners/" + encodeURIComponent(id),
+        { status },
+        "PATCH"
+      );
+
+      toast("Partner status updated.");
+      await adminDashboard();
+
+    } catch (error) {
+      toast(error.message);
+    }
+  }
+
+  async function updateBookingFromAdmin(id) {
+    try {
+      const select = $("assignPartner-" + id);
+      const partnerId = select?.value || null;
+
+      const body = {
+        status: partnerId ? "assigned" : "confirmed"
+      };
+
+      if (partnerId) body.partner_id = partnerId;
+
+      await request(
+        "/api/admin/bookings/" + encodeURIComponent(id),
+        body,
+        "PATCH"
+      );
+
+      toast("Booking updated.");
+      await adminDashboard();
+
+    } catch (error) {
+      toast(error.message);
+    }
+  }
+
+  /* =========================================
+     STARTUP CHECK
+     ========================================= */
+
+  console.log("CAMERA BOOKING frontend JavaScript loaded.");
+
+})();
