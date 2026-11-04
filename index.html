@@ -2,15 +2,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#090909">
-<title>CAMERA BOOKING | Photography, Videography & Creative Services</title>
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090909">
+  <meta name="description" content="CAMERA BOOKING - Premium photography, videography, wedding, event and creative production services.">
+  <title>CAMERA BOOKING | Premium Creative Studio</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<header>
+<header class="site-header">
   <div class="wrap nav">
     <a class="brand" href="#home">CAMERA <span>BOOKING</span></a>
     <nav>
@@ -24,154 +25,151 @@
   </div>
 </header>
 
-<main>
+<main id="publicWebsite">
 
-<section class="hero" id="home">
-  <div class="wrap hero-copy">
-    <div class="eyebrow">Your Creative Production & Talent Partner</div>
-    <h1>Music Videos.<br><span>Short Films. Big Stories.</span></h1>
-    <p>Photography, videography, music video production, short films, actors, actresses and professional makeup artists — bring your creative project to life with CAMERA BOOKING.</p>
-    <div class="actions">
-      <button class="btn" data-auth="customer">Book a Service</button>
-      <a class="btn outline" href="#services">Explore Services</a>
+  <section class="hero" id="home">
+    <div class="wrap hero-copy">
+      <div class="eyebrow">YOUR STORY · OUR CAMERA · PERFECT MOMENTS</div>
+      <h1>Capture Your<br><span>Beautiful Moments.</span></h1>
+      <p>Discover professional photography, cinematic videography, wedding films, music videos, events and creative production services.</p>
+      <div class="actions">
+        <button class="btn" data-auth="customer">Explore & Book Services</button>
+        <a class="btn outline" href="#services">Explore Collection</a>
+      </div>
+      <p class="offer">FIRST BOOKING SPECIAL · 40% OFF</p>
     </div>
-    <p class="offer">FIRST BOOKING OFFER · 40% OFF</p>
-  </div>
-</section>
+  </section>
 
-<section id="services" class="section">
-  <div class="wrap">
-    <div class="heading">
-      <div class="eyebrow">Our Creative Services</div>
-      <h2>What We <span>Offer</span></h2>
-      <p>Production, talent and event coverage in one place.</p>
+  <section id="services" class="section">
+    <div class="wrap">
+      <div class="heading">
+        <div class="eyebrow">OUR CREATIVE COLLECTION</div>
+        <h2>Explore Our <span>Services</span></h2>
+        <p>Find the perfect photography or production service for your occasion.</p>
+      </div>
+
+      <div class="cards">
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=80" alt="Wedding photography">
+          <div class="card-body">
+            <h3>Wedding Photography</h3>
+            <p>Beautiful wedding memories and professional coverage.</p>
+            <button class="text-btn" data-service="Wedding Photography">Explore Service →</button>
+          </div>
+        </article>
+
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=900&q=80" alt="Wedding film">
+          <div class="card-body">
+            <h3>Wedding Cinematography</h3>
+            <p>Cinematic wedding films and storytelling.</p>
+            <button class="text-btn" data-service="Wedding Cinematography">Explore Service →</button>
+          </div>
+        </article>
+
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=900&q=80" alt="Portrait photography">
+          <div class="card-body">
+            <h3>Portrait Photography</h3>
+            <p>Personal, family, fashion and professional portraits.</p>
+            <button class="text-btn" data-service="Portrait Photography">Explore Service →</button>
+          </div>
+        </article>
+
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?auto=format&fit=crop&w=900&q=80" alt="Videography">
+          <div class="card-body">
+            <h3>Professional Videography</h3>
+            <p>Creative video production and cinematic shoots.</p>
+            <button class="text-btn" data-service="Professional Videography">Explore Service →</button>
+          </div>
+        </article>
+
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=900&q=80" alt="Film production">
+          <div class="card-body">
+            <h3>Music Video Production</h3>
+            <p>Creative direction, shooting and editing.</p>
+            <button class="text-btn" data-service="Music Video Production">Explore Service →</button>
+          </div>
+        </article>
+
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80" alt="Makeup artist">
+          <div class="card-body">
+            <h3>Makeup Artists</h3>
+            <p>Bridal, fashion, party and professional makeup.</p>
+            <button class="text-btn" data-service="Makeup Artist">Explore Service →</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="heading">
+        <p>More than 100 photography, videography and creative services will be available in the customer catalogue.</p>
+        <button class="btn" data-auth="customer">View Full Service Catalogue</button>
+      </div>
     </div>
+  </section>
 
-    <div class="cards">
-      <article class="card">
-        <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=900&q=80" alt="Film production">
-        <div class="card-body">
-          <h3>Music Video Production</h3>
-          <p>Music video planning, camera crew, direction support, shooting and editing.</p>
-          <button class="text-btn" data-service="Music Video Production">Book this service →</button>
-        </div>
-      </article>
+  <section id="talent" class="section talent-section">
+    <div class="wrap">
+      <div class="heading">
+        <div class="eyebrow">CASTING & CREATIVE TALENT</div>
+        <h2>Bring Your <span>Creative Vision</span></h2>
+        <p>Explore talent and creative production enquiries.</p>
+      </div>
 
-      <article class="card">
-        <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=900&q=80" alt="Cinema">
-        <div class="card-body">
-          <h3>Short Film Production</h3>
-          <p>Short-film shoots, cinematography, production crew and post-production.</p>
-          <button class="text-btn" data-service="Short Film Production">Book this service →</button>
-        </div>
-      </article>
+      <div class="talent-grid">
+        <article class="talent-card">
+          <div class="talent-icon">✦</div>
+          <h3>Actor / Actress Enquiries</h3>
+          <p>Share your project requirements, role and shooting location.</p>
+          <button class="btn" data-service="Actor / Actress Requirement">Enquire Now</button>
+        </article>
 
-      <article class="card">
-        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=80" alt="Wedding photography">
-        <div class="card-body">
-          <h3>Wedding Photography</h3>
-          <p>Capture the emotions, traditions and details of your special day.</p>
-          <button class="text-btn" data-service="Wedding Photography">Book this service →</button>
-        </div>
-      </article>
-
-      <article class="card">
-        <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=900&q=80" alt="Portrait photography">
-        <div class="card-body">
-          <h3>Event & Portrait Photography</h3>
-          <p>Professional coverage for portraits, family events and celebrations.</p>
-          <button class="text-btn" data-service="Event & Portrait Photography">Book this service →</button>
-        </div>
-      </article>
-
-      <article class="card">
-        <img src="https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?auto=format&fit=crop&w=900&q=80" alt="Videography">
-        <div class="card-body">
-          <h3>Videography & Cinematography</h3>
-          <p>Creative video coverage, camera operators and edited visual stories.</p>
-          <button class="text-btn" data-service="Videography & Cinematography">Book this service →</button>
-        </div>
-      </article>
-
-      <article class="card">
-        <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80" alt="Makeup artist">
-        <div class="card-body">
-          <h3>Makeup Artists</h3>
-          <p>Bridal, party, fashion, film, stage and HD makeup services.</p>
-          <button class="text-btn" data-service="Makeup Artist">Book this service →</button>
-        </div>
-      </article>
+        <article class="talent-card">
+          <div class="talent-icon">✧</div>
+          <h3>Makeup Artist Enquiries</h3>
+          <p>Find makeup services for weddings, events and productions.</p>
+          <button class="btn" data-service="Makeup Artist">Explore Artists</button>
+        </article>
+      </div>
+      <p class="small-note">Talent availability is subject to confirmation, suitability and consent. Anyone under 18 must have a parent or legal guardian involved.</p>
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="talent" class="section talent-section">
-  <div class="wrap">
-    <div class="heading">
-      <div class="eyebrow">Casting & Creative Talent</div>
-      <h2>Need an <span>Actress or Actor?</span></h2>
-      <p>Ask CAMERA BOOKING about actor and actress requirements for music videos, short films and advertisements.</p>
+  <section id="about" class="section">
+    <div class="wrap about">
+      <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=1000&q=85" alt="Creative production studio">
+      <div>
+        <div class="eyebrow">ABOUT CAMERA BOOKING</div>
+        <h2>Every Moment Has a <span>Story</span></h2>
+        <p>CAMERA BOOKING connects customers with photography, videography, wedding, event and creative production services.</p>
+        <p class="muted">Bhowraguri Satbil Pt-2, Kokrajhar, Assam, India.</p>
+        <button class="btn outline" data-auth="customer">Get Started</button>
+      </div>
     </div>
+  </section>
 
-    <div class="talent-grid">
-      <article class="talent-card">
-        <div class="talent-icon">✦</div>
-        <h3>Actress / Actor Availability</h3>
-        <p>Share your project type, role requirements, location and shoot dates.</p>
-        <button class="btn" data-service="Actor / Actress Requirement">Enquire for Talent</button>
-      </article>
-
-      <article class="talent-card">
-        <div class="talent-icon">✧</div>
-        <h3>All Types of Makeup Artists</h3>
-        <p>Bridal, party, fashion, editorial, HD, film and event makeup artist enquiries.</p>
-        <button class="btn" data-service="Makeup Artist">Find a Makeup Artist</button>
-      </article>
+  <section id="contact" class="section">
+    <div class="wrap contact">
+      <div class="eyebrow">LET'S CREATE SOMETHING MEMORABLE</div>
+      <h2>Let's Make Your <span>Project Special</span></h2>
+      <p>Phone: 9101482761</p>
+      <p>WhatsApp: 7099705780</p>
+      <p>Email: camerabookingservice@gmail.com</p>
+      <p>Bhowraguri Satbil Pt-2, Kokrajhar, Assam, India.</p>
+      <a class="btn" href="https://wa.me/917099705780" target="_blank" rel="noopener">Chat on WhatsApp</a>
     </div>
-
-    <p class="small-note">Talent availability is subject to confirmation, suitability and consent. Anyone under 18 must have a parent or legal guardian involved in casting and booking arrangements.</p>
-  </div>
-</section>
-
-<section id="about" class="section">
-  <div class="wrap about">
-    <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=1000&q=85" alt="Film production set">
-    <div>
-      <div class="eyebrow">About Camera Booking</div>
-      <h2>One place for <span>creative projects</span></h2>
-      <p>CAMERA BOOKING connects customers with photography, videography, music video and short-film production services, as well as talent and makeup artist enquiries.</p>
-      <p class="muted">Business address: Bhowraguri Satbil Pt-2, Kokrajhar, Assam, India.</p>
-      <button class="btn outline" data-auth="customer">Get Started</button>
-    </div>
-  </div>
-</section>
-
-<section id="contact" class="section">
-  <div class="wrap contact">
-    <div class="eyebrow">Let's Create Something Memorable</div>
-    <h2>Have a project in <span>mind?</span></h2>
-    <p>Phone: 9101482761 · WhatsApp: 7099705780</p>
-    <p>Email: camerabookingservice@gmail.com</p>
-    <p>Bhowraguri Satbil Pt-2, Kokrajhar, Assam, India</p>
-    <a class="btn" href="https://wa.me/917099705780?text=Hello%20CAMERA%20BOOKING%2C%20I%20want%20to%20enquire%20about%20a%20service." target="_blank" rel="noopener">Chat on WhatsApp</a>
-  </div>
-</section>
-
+  </section>
 </main>
 
-<footer>
-  <div class="wrap foot">
-    <span>© 2026 CAMERA BOOKING. All rights reserved.</span>
-    <span>Music Videos · Short Films · Photography · Talent · Makeup</span>
-  </div>
-</footer>
-
-<!-- LOGIN / REGISTER MODAL -->
+<!-- AUTHENTICATION MODAL -->
 <div class="modal hidden" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
   <div class="modal-card">
     <button class="close" id="closeModal" aria-label="Close">×</button>
     <div class="eyebrow">CAMERA BOOKING ACCOUNT</div>
-    <h2 id="authTitle">Login / Register</h2>
+    <h2 id="authTitle">Welcome</h2>
 
     <div class="tabs">
       <button class="tab active" data-tab="customer">Customer</button>
@@ -179,64 +177,50 @@
       <button class="tab" data-tab="admin">Admin</button>
     </div>
 
-    <!-- CUSTOMER -->
     <div id="customerPanel" class="panel">
-      <p class="muted">Customer registration using your name and mobile number. No Gmail or SMS OTP form.</p>
-
-      <label>Your full name
-        <input id="customerName" placeholder="Enter your full name" autocomplete="name">
+      <p class="muted">Enter your name and mobile number to continue.</p>
+      <label>Full name
+        <input id="customerName" placeholder="Your full name" autocomplete="name">
       </label>
-
       <label>Mobile number
-        <input id="customerPhone" type="tel" inputmode="tel" maxlength="13" placeholder="10 digit mobile number" autocomplete="tel">
+        <input id="customerPhone" type="tel" maxlength="13" placeholder="10 digit mobile number" autocomplete="tel">
       </label>
-
-      <button class="btn full" id="customerContinue">Continue</button>
-      <p class="small-note">Phone ownership is not verified by this form. Secure account access will be connected through the backend.</p>
+      <button class="btn full" id="customerContinue">Continue to Dashboard</button>
+      <p class="small-note">Mobile ownership is not verified by this login method.</p>
     </div>
 
-    <!-- PARTNER -->
     <div id="partnerPanel" class="panel hidden">
-      <p class="muted">Partner registration requires email verification and admin approval.</p>
-
+      <p class="muted">Apply to become a CAMERA BOOKING local creative partner.</p>
       <label>Full name
-        <input id="partnerName" placeholder="Enter full name" autocomplete="name">
+        <input id="partnerName" placeholder="Full name" autocomplete="name">
       </label>
-
-      <label>Gmail / Email address
-        <input id="partnerEmail" type="email" placeholder="Enter your email address" autocomplete="email">
+      <label>Email address
+        <input id="partnerEmail" type="email" placeholder="Email address" autocomplete="email">
       </label>
-
       <label>Mobile number
-        <input id="partnerPhone" type="tel" placeholder="Enter mobile number" autocomplete="tel">
+        <input id="partnerPhone" type="tel" placeholder="Mobile number" autocomplete="tel">
       </label>
-
       <label>City / District
-        <input id="partnerCity" placeholder="Enter city or district">
+        <input id="partnerCity" placeholder="City or district">
       </label>
-
       <label>Photography / Videography skills
-        <textarea id="partnerSkills" placeholder="Photography, videography, editing, camera operation etc."></textarea>
+        <textarea id="partnerSkills" placeholder="Your skills and experience"></textarea>
       </label>
 
       <h3>Payment Details</h3>
-
+      <p class="small-note">Do not enter bank account or UPI information here until secure payment-detail storage is enabled.</p>
       <label>Bank account holder name
         <input id="partnerAccountName" placeholder="Account holder name">
       </label>
-
       <label>Bank account number
         <input id="partnerAccountNumber" inputmode="numeric" placeholder="Bank account number">
       </label>
-
       <label>IFSC code
-        <input id="partnerIFSC" placeholder="Enter IFSC code">
+        <input id="partnerIFSC" placeholder="IFSC code">
       </label>
-
       <label>UPI ID
-        <input id="partnerUPI" placeholder="example@upi">
+        <input id="partnerUPI" placeholder="UPI ID">
       </label>
-
       <label>Payment app
         <select id="partnerPaymentApp">
           <option value="">Select payment app</option>
@@ -246,34 +230,26 @@
           <option value="Other">Other</option>
         </select>
       </label>
-
       <label class="check">
         <input type="checkbox" id="partnerAgreement">
-        I have read the draft Partner Agreement and agree to continue.
+        I agree to submit my application for admin review.
       </label>
-
-      <button class="btn full" id="partnerRegister">Register & Verify Email</button>
-
+      <button class="btn full" id="partnerRegister">Submit Partner Application</button>
       <details class="agreement">
         <summary>Read Draft Partner Agreement</summary>
         <pre id="agreementText"></pre>
       </details>
-
-      <p class="small-note">Registration is subject to email verification and admin approval. No work or income is guaranteed. Do not submit bank details until secure backend handling is enabled.</p>
+      <p class="small-note">Partner access is subject to admin approval. Registration does not guarantee work or income.</p>
     </div>
 
-    <!-- ADMIN -->
     <div id="adminPanel" class="panel hidden">
-      <p class="muted">Authorized admin access only.</p>
-
+      <p class="muted">Authorized administrator access only.</p>
       <label>Admin email
         <input id="adminEmail" type="email" placeholder="Admin email" autocomplete="username">
       </label>
-
       <label>Password
         <input id="adminPassword" type="password" placeholder="Admin password" autocomplete="current-password">
       </label>
-
       <button class="btn full" id="adminLogin">Admin Login</button>
     </div>
 
@@ -281,13 +257,13 @@
   </div>
 </div>
 
-<!-- DASHBOARDS -->
+<!-- ACCOUNT DASHBOARDS -->
 <section id="dashboard" class="section dashboard hidden">
   <div class="wrap">
 
     <div class="dashboard-head">
       <div>
-        <div class="eyebrow">ACCOUNT</div>
+        <div class="eyebrow">CAMERA BOOKING CONTROL CENTER</div>
         <h2 id="dashboardTitle">Dashboard</h2>
         <p id="accountInfo" class="muted"></p>
       </div>
@@ -296,12 +272,70 @@
 
     <!-- CUSTOMER DASHBOARD -->
     <div id="customerDash" class="dash-panel hidden">
-      <div class="card pad">
-        <h3>Book a Service</h3>
 
+      <div class="dashboard-welcome card pad">
+        <div class="eyebrow">WELCOME TO CAMERA BOOKING</div>
+        <h2>Discover. Select. <span>Celebrate.</span></h2>
+        <p>Explore creative services and find the perfect team for your special moments.</p>
+        <p class="offer">YOUR FIRST BOOKING · 40% OFF</p>
+      </div>
+
+      <div class="dashboard-stats">
+        <div class="card pad">
+          <h3>My Bookings</h3>
+          <strong id="customerBookingCount">--</strong>
+        </div>
+        <div class="card pad">
+          <h3>Payment Status</h3>
+          <strong id="customerPaymentStatus">--</strong>
+        </div>
+        <div class="card pad">
+          <h3>My Offers</h3>
+          <strong>40% OFF*</strong>
+        </div>
+      </div>
+
+      <div class="card pad">
+        <div class="heading">
+          <div class="eyebrow">EXPLORE OUR COLLECTION</div>
+          <h2>Find Your <span>Perfect Service</span></h2>
+          <p>Browse available photography and production services.</p>
+        </div>
+
+        <label>Search services
+          <input id="serviceSearch" type="search" placeholder="Search wedding, birthday, drone, video...">
+        </label>
+
+        <div class="service-filters" id="serviceFilters">
+          <button class="tab active" data-category="All">All Services</button>
+          <button class="tab" data-category="Wedding">Wedding</button>
+          <button class="tab" data-category="Photography">Photography</button>
+          <button class="tab" data-category="Videography">Videography</button>
+          <button class="tab" data-category="Events">Events</button>
+          <button class="tab" data-category="Film">Film & Music</button>
+          <button class="tab" data-category="Other">Other Services</button>
+        </div>
+
+        <div id="serviceCatalogGrid" class="cards">
+          <p class="muted">Service catalogue will appear here when connected to the service API.</p>
+        </div>
+        <p class="small-note">Service prices and availability must be confirmed from the live catalogue.</p>
+      </div>
+
+      <div class="card pad" id="selectedServicePanel">
+        <div class="eyebrow">YOUR SELECTED SERVICE</div>
+        <h3 id="selectedServiceName">Select a service to begin</h3>
+        <p id="selectedServiceDescription" class="muted">Choose a service from the catalogue above.</p>
+        <p id="selectedServicePrice"></p>
+      </div>
+
+      <div class="card pad" id="bookingFormPanel">
+        <div class="eyebrow">BOOK YOUR EXPERIENCE</div>
+        <h3>Booking Details</h3>
         <div class="form-grid">
           <label>Service
             <select id="bookingService">
+              <option value="">Select a service</option>
               <option>Music Video Production</option>
               <option>Short Film Production</option>
               <option>Actor / Actress Requirement</option>
@@ -312,72 +346,141 @@
               <option>Other</option>
             </select>
           </label>
-
-          <label>City
-            <input id="bookingCity" placeholder="City / district">
+          <label>City / District
+            <input id="bookingCity" placeholder="City or district">
           </label>
-
-          <label>Venue / Location
-            <input id="bookingVenue" placeholder="Venue or address">
+          <label>Full venue / address
+            <input id="bookingVenue" placeholder="Full event address or venue">
           </label>
-
           <label>Event / Shoot Date
             <input id="bookingDate" type="date">
           </label>
-
-          <label class="span2">Project Details / Casting Brief
-            <textarea id="bookingNotes" placeholder="Describe your project, requirements, shoot dates or other details"></textarea>
+          <label class="span2">Project Details
+            <textarea id="bookingNotes" placeholder="Describe your event, requirements and other details"></textarea>
           </label>
         </div>
-
+        <div class="price-summary" id="bookingPriceSummary">
+          <p>Service price: <strong id="bookingOriginalPrice">To be confirmed</strong></p>
+          <p>First booking discount: <strong id="bookingDiscount">40% OFF*</strong></p>
+          <p>Discounted total: <strong id="bookingFinalPrice">To be calculated</strong></p>
+          <p>30% advance: <strong id="bookingAdvance">To be calculated</strong></p>
+          <p>Remaining balance: <strong id="bookingBalance">To be calculated</strong></p>
+        </div>
         <button class="btn" id="createBooking">Submit Booking Request</button>
+        <p class="small-note">Final price and advance payment will be confirmed by the booking system. Discount is for the first eligible booking only.</p>
       </div>
 
       <div class="card pad">
+        <div class="eyebrow">YOUR BOOKING HISTORY</div>
         <h3>My Bookings</h3>
-        <div id="myBookings" class="muted">Loading…</div>
+        <div id="myBookings" class="muted">Loading bookings...</div>
+      </div>
+
+      <div class="card pad">
+        <div class="eyebrow">PAYMENT CENTER</div>
+        <h3>My Payments & Receipts</h3>
+        <div id="customerPayments">Payment information will appear here.</div>
+        <div id="customerReceipts">Receipts will appear here after verified payment.</div>
+      </div>
+
+      <div class="card pad">
+        <h3>Need Help?</h3>
+        <p>Contact CAMERA BOOKING for help with your booking.</p>
+        <a class="btn outline" href="https://wa.me/917099705780" target="_blank" rel="noopener">WhatsApp Support</a>
       </div>
     </div>
 
     <!-- PARTNER DASHBOARD -->
     <div id="partnerDash" class="dash-panel hidden">
-      <div class="card pad">
-        <h3>Partner Status</h3>
-        <p id="partnerStatus">Loading…</p>
-        <div id="partnerCertificate" class="hidden">
-          <h3>Partner Certificate</h3>
-          <p class="muted">Certificate download will be enabled after secure certificate generation is added to the backend.</p>
+
+      <div class="dashboard-welcome card pad">
+        <div class="eyebrow">PARTNER WORKSPACE</div>
+        <h2>Welcome to Your <span>Partner Studio</span></h2>
+        <p>Manage assigned projects, update work progress and review your payment records.</p>
+      </div>
+
+      <div class="dashboard-stats">
+        <div class="card pad">
+          <h3>Partner Status</h3>
+          <strong id="partnerStatus">Loading...</strong>
+        </div>
+        <div class="card pad">
+          <h3>Assigned Projects</h3>
+          <strong id="partnerBookingCount">--</strong>
+        </div>
+        <div class="card pad">
+          <h3>Payment Records</h3>
+          <strong id="partnerPaymentCount">--</strong>
         </div>
       </div>
 
       <div class="card pad">
-        <h3>Assigned Bookings</h3>
-        <div id="partnerBookings">Loading…</div>
+        <h3>Partner Profile</h3>
+        <div id="partnerProfile">Profile information will appear here.</div>
       </div>
 
       <div class="card pad">
-        <h3>Payment History</h3>
-        <div id="partnerPayments">Loading…</div>
+        <h3>Assigned Bookings & Projects</h3>
+        <div id="partnerBookings">Loading assigned bookings...</div>
+      </div>
+
+      <div class="card pad">
+        <h3>Work Progress</h3>
+        <div id="partnerWorkProgress">Your assigned work status will appear here.</div>
+      </div>
+
+      <div class="card pad">
+        <h3>Payment History & Earnings</h3>
+        <div id="partnerPayments">Loading payment history...</div>
+      </div>
+
+      <div class="card pad">
+        <h3>Partner Certificate</h3>
+        <div id="partnerCertificate" class="hidden">
+          <p class="muted">Certificate availability will be shown after admin approval and secure certificate generation.</p>
+        </div>
+      </div>
+
+      <div class="card pad">
+        <h3>Partner Support</h3>
+        <a class="btn outline" href="https://wa.me/917099705780" target="_blank" rel="noopener">Contact Admin Support</a>
       </div>
     </div>
 
     <!-- ADMIN DASHBOARD -->
     <div id="adminDash" class="dash-panel hidden">
-      <div class="card pad">
-        <h3>Partner Applications</h3>
-        <div id="adminPartners">Loading…</div>
+
+      <div class="dashboard-welcome card pad">
+        <div class="eyebrow">ADMINISTRATION · CONTROL CENTER</div>
+        <h2>CAMERA BOOKING <span>Management</span></h2>
+        <p>Manage bookings, customers, partners, services, payments and business operations.</p>
       </div>
 
-      <div class="card pad">
-        <h3>All Bookings</h3>
-        <div id="adminBookings">Loading…</div>
+      <div class="dashboard-stats">
+        <div class="card pad">
+          <h3>Total Bookings</h3>
+          <strong id="adminTotalBookings">--</strong>
+        </div>
+        <div class="card pad">
+          <h3>Pending Bookings</h3>
+          <strong id="adminPendingBookings">--</strong>
+        </div>
+        <div class="card pad">
+          <h3>Customers</h3>
+          <strong id="adminTotalCustomers">--</strong>
+        </div>
+        <div class="card pad">
+          <h3>Partners</h3>
+          <strong id="adminTotalPartners">--</strong>
+        </div>
+        <div class="card pad">
+          <h3>Revenue</h3>
+          <strong id="adminTotalRevenue">--</strong>
+        </div>
+        <div class="card pad">
+          <h3>Pending Payments</h3>
+          <strong id="adminPendingPayments">--</strong>
+        </div>
       </div>
-    </div>
 
-  </div>
-</section>
-
-<script src="config.js"></script>
-<script src="app.js"></script>
-</body>
-</html>
+ 
