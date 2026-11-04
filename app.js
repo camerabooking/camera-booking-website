@@ -1,377 +1,377 @@
 
-// ======================================
-// CAMERA BOOKING - COMPLETE WEBSITE APP
-// ======================================
+/* =========================================
+   CAMERA BOOKING - COMPLETE FRONTEND APP
+   ========================================= */
 
-const API = (
-  window.CAMERA_BOOKING_API ||
-  "https://camera-booking-backend.onrender.com"
-).replace(/\/$/, "");
+(() => {
+  "use strict";
 
-const $ = id => document.getElementById(id);
+  document.addEventListener("DOMContentLoaded", init);
 
-let token = localStorage.getItem("cb_token") || "";
-let me = null;
-let selectedService = null;
-let allBookings = [];
-let allPartners = [];
+  const API = (
+    window.CAMERA_BOOKING_API ||
+    "https://camera-booking-backend.onrender.com"
+  ).replace(/\/$/, "");
 
-// ======================================
-// SERVICE CATALOGUE
-// Prices are confirmed by admin on enquiry.
-// ======================================
+  const $ = id => document.getElementById(id);
 
-const SERVICES = [
-  {id:1,name:"Wedding Photography",category:"wedding",description:"Professional wedding photography coverage."},
-  {id:2,name:"Wedding Videography",category:"wedding",description:"Wedding video coverage and cinematic moments."},
-  {id:3,name:"Pre-Wedding Shoot",category:"wedding",description:"Creative pre-wedding photography."},
-  {id:4,name:"Cinematic Wedding Film",category:"wedding",description:"Cinematic wedding film production."},
-  {id:5,name:"Engagement Photography",category:"wedding",description:"Engagement ceremony photography."},
-  {id:6,name:"Haldi Photography",category:"wedding",description:"Haldi ceremony coverage."},
-  {id:7,name:"Mehndi Photography",category:"wedding",description:"Mehndi ceremony photography."},
-  {id:8,name:"Reception Photography",category:"wedding",description:"Reception event photography."},
-  {id:9,name:"Birthday Photography",category:"event",description:"Birthday party photography."},
-  {id:10,name:"Birthday Videography",category:"event",description:"Birthday video coverage."},
-  {id:11,name:"Event Photography",category:"event",description:"Professional event photography."},
-  {id:12,name:"Event Videography",category:"event",description:"Complete event video coverage."},
-  {id:13,name:"Corporate Photography",category:"event",description:"Corporate event photography."},
-  {id:14,name:"Conference Videography",category:"event",description:"Conference and seminar video coverage."},
-  {id:15,name:"School Event Photography",category:"event",description:"School and college event coverage."},
-  {id:16,name:"Cultural Programme",category:"event",description:"Cultural programme photography and video."},
-  {id:17,name:"Music Video Production",category:"video",description:"Music video planning and production."},
-  {id:18,name:"Short Film Production",category:"video",description:"Short film shooting and production."},
-  {id:19,name:"Documentary Film",category:"video",description:"Documentary video production."},
-  {id:20,name:"YouTube Video Shooting",category:"video",description:"YouTube content shooting."},
-  {id:21,name:"Reels Video Shooting",category:"video",description:"Short-form social media video."},
-  {id:22,name:"Promotional Video",category:"video",description:"Business and product promotional video."},
-  {id:23,name:"Drone Videography",category:"video",description:"Aerial video coverage where legally permitted."},
-  {id:24,name:"Live Streaming",category:"video",description:"Event live-streaming service."},
-  {id:25,name:"Portrait Photography",category:"portrait",description:"Professional portrait session."},
-  {id:26,name:"Model Portfolio",category:"portrait",description:"Model portfolio photography."},
-  {id:27,name:"Fashion Photography",category:"portrait",description:"Fashion and clothing photography."},
-  {id:28,name:"Product Photography",category:"portrait",description:"Product photos for online and offline business."},
-  {id:29,name:"Family Photography",category:"portrait",description:"Family photoshoot."},
-  {id:30,name:"Couple Photoshoot",category:"portrait",description:"Creative couple photography."},
-  {id:31,name:"Maternity Photography",category:"portrait",description:"Maternity photoshoot."},
-  {id:32,name:"Baby Photography",category:"portrait",description:"Baby and children photography."},
-  {id:33,name:"Makeup Artist Booking",category:"talent",description:"Makeup artist enquiry and booking."},
-  {id:34,name:"Bridal Makeup",category:"talent",description:"Bridal makeup artist enquiry."},
-  {id:35,name:"Hair Stylist Booking",category:"talent",description:"Professional hair stylist enquiry."},
-  {id:36,name:"Actor / Actress Enquiry",category:"talent",description:"Acting and casting enquiry."},
-  {id:37,name:"Model Enquiry",category:"talent",description:"Model and portfolio enquiry."},
-  {id:38,name:"Anchor / Host Booking",category:"talent",description:"Event anchor and host enquiry."},
-  {id:39,name:"Dancer Booking",category:"talent",description:"Professional dancer enquiry."},
-  {id:40,name:"Photographer Booking",category:"crew",description:"Professional photographer assignment."},
-  {id:41,name:"Videographer Booking",category:"crew",description:"Professional videographer assignment."},
-  {id:42,name:"Cinematographer Booking",category:"crew",description:"Cinematographer assignment."},
-  {id:43,name:"Camera Assistant",category:"crew",description:"Camera assistant for shoots."},
-  {id:44,name:"Video Editor",category:"crew",description:"Professional video editing enquiry."},
-  {id:45,name:"Photo Editing",category:"crew",description:"Photo editing and retouching."},
-  {id:46,name:"Album Design",category:"crew",description:"Wedding and event album design."},
-  {id:47,name:"Wedding Album Printing",category:"crew",description:"Printed wedding album enquiry."},
-  {id:48,name:"Photo Frame",category:"crew",description:"Custom photo frame enquiry."}
-];
+  let token = localStorage.getItem("cb_token") || "";
+  let me = null;
+  let selectedService = null;
+  let allBookings = [];
+  let allPartners = [];
 
-// ======================================
-// COMMON HELPERS
-// ======================================
+  const SERVICES = [
+    ["Wedding Photography","wedding","Professional wedding photography coverage."],
+    ["Wedding Videography","wedding","Wedding video coverage."],
+    ["Pre-Wedding Shoot","wedding","Creative pre-wedding photography."],
+    ["Cinematic Wedding Film","wedding","Cinematic wedding film production."],
+    ["Engagement Photography","wedding","Engagement ceremony photography."],
+    ["Haldi Photography","wedding","Haldi ceremony coverage."],
+    ["Mehndi Photography","wedding","Mehndi ceremony photography."],
+    ["Reception Photography","wedding","Reception event photography."],
+    ["Birthday Photography","event","Birthday party photography."],
+    ["Birthday Videography","event","Birthday video coverage."],
+    ["Event Photography","event","Professional event photography."],
+    ["Event Videography","event","Complete event video coverage."],
+    ["Corporate Photography","event","Corporate event photography."],
+    ["Conference Videography","event","Conference and seminar video."],
+    ["School Event Photography","event","School and college event coverage."],
+    ["Cultural Programme","event","Cultural programme photography."],
+    ["Music Video Production","video","Music video production."],
+    ["Short Film Production","video","Short film shooting and production."],
+    ["Documentary Film","video","Documentary video production."],
+    ["YouTube Video Shooting","video","YouTube content shooting."],
+    ["Reels Video Shooting","video","Social media video shooting."],
+    ["Promotional Video","video","Business promotional video."],
+    ["Drone Videography","video","Aerial video where legally permitted."],
+    ["Live Streaming","video","Event live streaming."],
+    ["Portrait Photography","portrait","Professional portrait session."],
+    ["Model Portfolio","portrait","Model portfolio photography."],
+    ["Fashion Photography","portrait","Fashion photography."],
+    ["Product Photography","portrait","Product photography."],
+    ["Family Photography","portrait","Family photoshoot."],
+    ["Couple Photoshoot","portrait","Couple photography."],
+    ["Maternity Photography","portrait","Maternity photoshoot."],
+    ["Baby Photography","portrait","Baby and children photography."],
+    ["Makeup Artist Booking","talent","Makeup artist enquiry."],
+    ["Bridal Makeup","talent","Bridal makeup artist enquiry."],
+    ["Hair Stylist Booking","talent","Professional hair stylist."],
+    ["Actor / Actress Enquiry","talent","Acting and casting enquiry."],
+    ["Model Enquiry","talent","Model and portfolio enquiry."],
+    ["Anchor / Host Booking","talent","Event anchor and host."],
+    ["Dancer Booking","talent","Professional dancer enquiry."],
+    ["Photographer Booking","crew","Photographer assignment."],
+    ["Videographer Booking","crew","Videographer assignment."],
+    ["Cinematographer Booking","crew","Cinematographer assignment."],
+    ["Camera Assistant","crew","Camera assistant for shoots."],
+    ["Video Editor","crew","Professional video editing."],
+    ["Photo Editing","crew","Photo editing and retouching."],
+    ["Album Design","crew","Wedding and event album design."],
+    ["Wedding Album Printing","crew","Printed wedding album."],
+    ["Photo Frame","crew","Custom photo frame."]
+  ].map((item, index) => ({
+    id: index + 1,
+    name: item[0],
+    category: item[1],
+    description: item[2]
+  }));
 
-function escapeHtml(value) {
-  return String(value ?? "").replace(/[&<>"']/g, c => ({
-    "&":"&amp;",
-    "<":"&lt;",
-    ">":"&gt;",
-    '"':"&quot;",
-    "'":"&#39;"
-  }[c]));
-}
-
-function toast(text) {
-  let el = $("toast");
-
-  if (!el) {
-    el = document.createElement("div");
-    el.id = "toast";
-    document.body.appendChild(el);
-  }
-
-  el.textContent = text;
-  el.style.cssText =
-    "position:fixed;bottom:25px;left:50%;transform:translateX(-50%);" +
-    "background:#222;color:white;padding:13px 20px;" +
-    "border:1px solid #d6b36a;border-radius:8px;" +
-    "z-index:99999;max-width:90%;text-align:center;";
-
-  clearTimeout(window.cbToastTimer);
-  window.cbToastTimer = setTimeout(() => el.remove(), 3500);
-}
-
-function message(text, isError = false) {
-  const el = $("authMessage");
-
-  if (!el) {
-    toast(text);
-    return;
-  }
-
-  el.textContent = text;
-  el.style.color = isError ? "#e57373" : "#d6b36a";
-}
-
-function normalizePhone(phone) {
-  phone = String(phone || "").replace(/\s+/g, "");
-
-  if (/^\d{10}$/.test(phone)) return "+91" + phone;
-  if (/^91\d{10}$/.test(phone)) return "+" + phone;
-
-  return phone;
-}
-
-function getList(data, key) {
-  if (Array.isArray(data)) return data;
-  if (Array.isArray(data?.[key])) return data[key];
-  return [];
-}
-
-function money(value) {
-  const amount = Number(value);
-  if (!Number.isFinite(amount)) return "Not available";
-
-  return new Intl.NumberFormat("en-IN", {
-    style:"currency",
-    currency:"INR",
-    maximumFractionDigits:2
-  }).format(amount);
-}
-
-async function request(path, body = null, method = "POST") {
-  const response = await fetch(API + path, {
-    method,
-    headers: {
-      "Content-Type":"application/json",
-      ...(token ? {Authorization:"Bearer " + token} : {})
-    },
-    ...(body !== null ? {body:JSON.stringify(body)} : {})
-  });
-
-  const data = await response.json().catch(() => ({}));
-
-  if (!response.ok) {
-    throw new Error(
-      data.error ||
-      data.message ||
-      data.detail ||
-      "Server connection failed."
-    );
-  }
-
-  return data;
-}
-
-// ======================================
-// MODAL
-// ======================================
-
-function openModal() {
-  $("authModal")?.classList.remove("hidden");
-}
-
-function closeModal() {
-  $("authModal")?.classList.add("hidden");
-}
-
-$("closeModal")?.addEventListener("click", closeModal);
-
-$("authModal")?.addEventListener("click", event => {
-  if (event.target === $("authModal")) closeModal();
-});
-
-// ======================================
-// LOGIN TABS
-// ======================================
-
-function showTab(tab) {
-  ["customer","partner","admin"].forEach(name => {
-    $(name + "Panel")?.classList.toggle("hidden", name !== tab);
-  });
-
-  document.querySelectorAll("[data-tab]").forEach(button => {
-    button.classList.toggle("active", button.dataset.tab === tab);
-  });
-
-  if ($("authTitle")) {
-    $("authTitle").textContent =
-      tab === "customer" ? "Customer Login / Register" :
-      tab === "partner" ? "Partner Registration" :
-      "Admin Login";
-  }
-
-  message("");
-}
-
-document.querySelectorAll("[data-tab]").forEach(button => {
-  button.addEventListener("click", () => showTab(button.dataset.tab));
-});
-
-document.querySelectorAll("[data-auth]").forEach(button => {
-  button.addEventListener("click", () => {
-    showTab(button.dataset.auth);
-    openModal();
-  });
-});
-
-document.querySelectorAll("[data-service]").forEach(button => {
-  button.addEventListener("click", () => {
-    selectService(button.dataset.service);
+  function init() {
+    bindEvents();
+    renderServices();
     showTab("customer");
-    openModal();
-  });
-});
 
-showTab("customer");
-
-// ======================================
-// SERVICE CATALOGUE DISPLAY
-// ======================================
-
-function renderServices(list = SERVICES) {
-  const grid = $("serviceCatalogGrid");
-  if (!grid) return;
-
-  grid.innerHTML = list.map(service => `
-    <article class="card service-card">
-      <div class="service-card-content">
-        <span class="status">${escapeHtml(service.category)}</span>
-        <h3>${escapeHtml(service.name)}</h3>
-        <p>${escapeHtml(service.description)}</p>
-        <p class="service-price">Price: Confirm with admin</p>
-        <button class="btn" data-catalog-service="${service.id}">
-          Select Service
-        </button>
-      </div>
-    </article>
-  `).join("") || "<p>No services found.</p>";
-
-  grid.querySelectorAll("[data-catalog-service]").forEach(button => {
-    button.addEventListener("click", () => {
-      selectService(button.dataset.catalogService);
-    });
-  });
-}
-
-function selectService(id) {
-  selectedService = SERVICES.find(
-    service => String(service.id) === String(id)
-  ) || SERVICES.find(
-    service => service.name.toLowerCase() === String(id).toLowerCase()
-  ) || null;
-
-  if (!selectedService) {
-    selectedService = {
-      id:0,
-      name:String(id),
-      description:"Selected service"
-    };
+    if (token) {
+      dashboard();
+    }
   }
 
-  if ($("selectedServiceName")) {
-    $("selectedServiceName").textContent = selectedService.name;
+  /* =========================================
+     COMMON HELPERS
+     ========================================= */
+
+  function escapeHtml(value) {
+    return String(value ?? "").replace(/[&<>"']/g, c => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    }[c]));
   }
 
-  if ($("selectedServiceDescription")) {
-    $("selectedServiceDescription").textContent =
-      selectedService.description || "Service selected.";
+  function toast(text) {
+    let el = $("toast");
+
+    if (!el) {
+      el = document.createElement("div");
+      el.id = "toast";
+      document.body.appendChild(el);
+    }
+
+    el.textContent = text;
+    el.style.cssText =
+      "position:fixed;bottom:25px;left:50%;transform:translateX(-50%);" +
+      "background:#222;color:white;padding:13px 20px;" +
+      "border:1px solid #d6b36a;border-radius:8px;" +
+      "z-index:999999;max-width:90%;text-align:center;";
+
+    clearTimeout(window.cbToastTimer);
+
+    window.cbToastTimer = setTimeout(() => {
+      el.remove();
+    }, 3500);
   }
 
-  if ($("selectedServicePrice")) {
-    $("selectedServicePrice").textContent = "Price confirmed by admin";
+  function message(text, error = false) {
+    const el = $("authMessage");
+
+    if (!el) {
+      toast(text);
+      return;
+    }
+
+    el.textContent = text;
+    el.style.color = error ? "#e57373" : "#d6b36a";
   }
 
-  if ($("bookingService")) {
-    $("bookingService").value = selectedService.name;
+  function normalizePhone(value) {
+    let phone = String(value || "").replace(/[\s()-]/g, "");
+
+    if (/^\d{10}$/.test(phone)) return "+91" + phone;
+    if (/^91\d{10}$/.test(phone)) return "+" + phone;
+
+    return phone;
   }
 
-  $("selectedServicePanel")?.classList.remove("hidden");
-  $("bookingFormPanel")?.classList.remove("hidden");
-
-  if (!token) {
-    showTab("customer");
-    openModal();
-    message("Login first to submit your booking.");
-    return;
+  function phoneValid(phone) {
+    return /^\+91\d{10}$/.test(phone);
   }
 
-  $("bookingFormPanel")?.scrollIntoView({behavior:"smooth"});
-}
+  function validEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
 
-function filterServices() {
-  const search = ($("serviceSearch")?.value || "").toLowerCase();
-  const activeFilter = document.querySelector(
-    "#serviceFilters [data-category].active"
-  );
+  function money(value) {
+    const amount = Number(value);
 
-  const category = activeFilter?.dataset.category || "all";
+    if (!Number.isFinite(amount)) return "Not available";
 
-  const filtered = SERVICES.filter(service => {
-    const matchesSearch =
-      service.name.toLowerCase().includes(search) ||
-      service.description.toLowerCase().includes(search);
+    return new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
+      maximumFractionDigits: 2
+    }).format(amount);
+  }
 
-    const matchesCategory =
-      category === "all" || service.category === category;
-
-    return matchesSearch && matchesCategory;
-  });
-
-  renderServices(filtered);
-}
-
-$("serviceSearch")?.addEventListener("input", filterServices);
-
-document.querySelectorAll("#serviceFilters [data-category]").forEach(button => {
-  button.addEventListener("click", () => {
-    document.querySelectorAll("#serviceFilters [data-category]").forEach(item => {
-      item.classList.remove("active");
+  async function request(path, body = null, method = "POST") {
+    const response = await fetch(API + path, {
+      method,
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: "Bearer " + token } : {})
+      },
+      ...(body !== null ? { body: JSON.stringify(body) } : {})
     });
 
-    button.classList.add("active");
-    filterServices();
-  });
-});
+    const data = await response.json().catch(() => ({}));
 
-renderServices();
+    if (!response.ok) {
+      throw new Error(
+        data.error || data.message || "Server connection failed."
+      );
+    }
 
-// ======================================
-// CUSTOMER LOGIN - NO OTP
-// ======================================
+    return data;
+  }
 
-if ($("customerContinue")) {
-  $("customerContinue").onclick = async () => {
+  function setButtonLoading(button, loading, normalText) {
+    if (!button) return;
+
+    button.disabled = loading;
+    button.textContent = loading ? "Please wait..." : normalText;
+  }
+
+  /* =========================================
+     MODAL AND LOGIN TABS
+     ========================================= */
+
+  function openModal() {
+    $("authModal")?.classList.remove("hidden");
+  }
+
+  function closeModal() {
+    $("authModal")?.classList.add("hidden");
+  }
+
+  function showTab(tab) {
+    ["customer", "partner", "admin"].forEach(name => {
+      $(name + "Panel")?.classList.toggle("hidden", name !== tab);
+    });
+
+    document.querySelectorAll("[data-tab]").forEach(button => {
+      button.classList.toggle("active", button.dataset.tab === tab);
+    });
+
+    if ($("authTitle")) {
+      $("authTitle").textContent =
+        tab === "customer" ? "Customer Login / Register" :
+        tab === "partner" ? "Partner Registration" :
+        "Admin Login";
+    }
+
+    message("");
+  }
+
+  /* =========================================
+     ALL WEBSITE CLICK EVENTS
+     Event delegation also supports dynamic buttons.
+     ========================================= */
+
+  function bindEvents() {
+    document.addEventListener("click", event => {
+      const target = event.target;
+
+      const close = target.closest("#closeModal");
+      if (close) {
+        closeModal();
+        return;
+      }
+
+      if (target.id === "authModal") {
+        closeModal();
+        return;
+      }
+
+      const tabButton = target.closest("[data-tab]");
+      if (tabButton) {
+        showTab(tabButton.dataset.tab);
+        return;
+      }
+
+      const authButton = target.closest("[data-auth]");
+      if (authButton) {
+        showTab(authButton.dataset.auth);
+        openModal();
+        return;
+      }
+
+      const serviceButton = target.closest("[data-service]");
+      if (serviceButton) {
+        selectService(serviceButton.dataset.service);
+        return;
+      }
+
+      const catalogueButton = target.closest("[data-catalog-service]");
+      if (catalogueButton) {
+        selectService(catalogueButton.dataset.catalogService);
+        return;
+      }
+
+      const categoryButton = target.closest("[data-category]");
+      if (categoryButton) {
+        document.querySelectorAll("#serviceFilters [data-category]")
+          .forEach(button => button.classList.remove("active"));
+
+        categoryButton.classList.add("active");
+        filterServices();
+        return;
+      }
+
+      const logoutButton = target.closest("#logoutBtn");
+      if (logoutButton) {
+        logout();
+        return;
+      }
+
+      const bookingButton = target.closest("#createBooking");
+      if (bookingButton) {
+        submitBooking();
+        return;
+      }
+
+      const approveButton = target.closest("[data-approve-partner]");
+      if (approveButton) {
+        updatePartnerStatus(approveButton.dataset.approvePartner, "approved");
+        return;
+      }
+
+      const rejectButton = target.closest("[data-reject-partner]");
+      if (rejectButton) {
+        updatePartnerStatus(rejectButton.dataset.rejectPartner, "rejected");
+        return;
+      }
+
+      const assignButton = target.closest("[data-update-booking]");
+      if (assignButton) {
+        updateBookingFromAdmin(assignButton.dataset.updateBooking);
+        return;
+      }
+
+      const customerButton = target.closest("#customerContinue");
+      if (customerButton) {
+        customerLogin();
+        return;
+      }
+
+      const partnerButton = target.closest("#partnerRegister");
+      if (partnerButton) {
+        partnerRegister();
+        return;
+      }
+
+      const adminButton = target.closest("#adminLogin");
+      if (adminButton) {
+        adminLogin();
+        return;
+      }
+    });
+
+    $("serviceSearch")?.addEventListener("input", filterServices);
+
+    $("customerName")?.addEventListener("keydown", event => {
+      if (event.key === "Enter") customerLogin();
+    });
+
+    $("customerPhone")?.addEventListener("keydown", event => {
+      if (event.key === "Enter") customerLogin();
+    });
+
+    $("partnerAgreement")?.addEventListener("change", () => {
+      // Agreement checkbox is handled during registration.
+    });
+  }
+
+  /* =========================================
+     CUSTOMER LOGIN
+     Name + mobile number only.
+     ========================================= */
+
+  async function customerLogin() {
     const button = $("customerContinue");
 
     try {
-      const name = $("customerName").value.trim();
-      const phone = normalizePhone($("customerPhone").value.trim());
+      const name = $("customerName")?.value.trim() || "";
+      const phone = normalizePhone($("customerPhone")?.value);
 
       if (name.length < 2) {
         throw new Error("Enter your full name.");
       }
 
-      if (!/^\+91\d{10}$/.test(phone)) {
+      if (!phoneValid(phone)) {
         throw new Error("Enter a valid 10 digit Indian mobile number.");
       }
 
-      button.disabled = true;
-      button.textContent = "Please wait...";
+      setButtonLoading(button, true, "Continue");
 
       const data = await request("/api/auth/customer-register", {
         name,
-        phone,
-        role:"customer"
+        phone
       });
 
       if (!data.token) {
-        throw new Error(data.message || "Customer login failed.");
+        throw new Error("Customer login failed.");
       }
 
       await saveLogin(data);
@@ -379,18 +379,18 @@ if ($("customerContinue")) {
     } catch (error) {
       message(error.message, true);
     } finally {
-      button.disabled = false;
-      button.textContent = "Continue";
+      setButtonLoading(button, false, "Continue");
     }
-  };
-}
+  }
 
-// ======================================
-// PARTNER AGREEMENT
-// ======================================
+  /* =========================================
+     PARTNER AGREEMENT
+     ========================================= */
 
-if ($("agreementText")) {
-  $("agreementText").textContent =
+  function showAgreement() {
+    if (!$("agreementText")) return;
+
+    $("agreementText").textContent =
 `CAMERA BOOKING - DRAFT PARTNER AGREEMENT
 
 Business Name: CAMERA BOOKING
@@ -399,21 +399,19 @@ Business Address:
 Bhowraguri Satbil Pt-2,
 Kokrajhar, Assam, India.
 
-1. The partner agrees to provide approved photography, videography or creative services.
+1. Partner agrees to provide approved photography, videography or creative services.
 
-2. The partner must provide accurate personal, contact and skill details.
+2. Partner must provide accurate personal, contact and skill details.
 
-3. Every partner application is subject to CAMERA BOOKING admin approval.
+3. Every partner application requires admin approval.
 
-4. Work assignments, service details, dates, locations and payment must be agreed before each assignment.
+4. Work assignments, dates, locations and payment must be agreed before each assignment.
 
 5. Partners must respect customer privacy and obtain appropriate permissions.
 
-6. No assignment or income is guaranteed. Work depends on customer requirements and availability.
+6. No assignment or income is guaranteed.
 
-7. Any cancellation, payment dispute or other issue should be reported to CAMERA BOOKING.
-
-8. Both parties should agree on final terms before signing.
+7. Any cancellation or payment dispute should be reported to CAMERA BOOKING.
 
 Partner Name: ______________________
 Partner Mobile: ____________________
@@ -423,118 +421,115 @@ Partner Signature: __________________
 Business Representative: _____________
 Date: ______________________________
 
-IMPORTANT:
-This is a discussion draft, not a final legal contract.
-Have an Indian lawyer review it before signing.`;
-}
+This is a draft, not a final legal contract.`;
+  }
 
-// ======================================
-// PARTNER REGISTRATION
-// ======================================
-
-if ($("partnerRegister")) {
-  $("partnerRegister").onclick = async () => {
+  async function partnerRegister() {
     const button = $("partnerRegister");
 
     try {
-      const name = $("partnerName").value.trim();
-      const email = $("partnerEmail").value.trim().toLowerCase();
-      const phone = normalizePhone($("partnerPhone").value.trim());
-      const city = $("partnerCity").value.trim();
-      const skills = $("partnerSkills").value.trim();
+      const name = $("partnerName")?.value.trim() || "";
+      const email = $("partnerEmail")?.value.trim().toLowerCase() || "";
+      const phone = normalizePhone($("partnerPhone")?.value);
+      const city = $("partnerCity")?.value.trim() || "";
+      const skills = $("partnerSkills")?.value.trim() || "";
 
-      if (name.length < 2) throw new Error("Enter your full name.");
-
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        throw new Error("Enter a valid email address.");
+      if (name.length < 2) {
+        throw new Error("Enter your full name.");
       }
 
-      if (!/^\+91\d{10}$/.test(phone)) {
+      if (email && !validEmail(email)) {
+        throw new Error("Enter a valid email address or leave it blank.");
+      }
+
+      if (!phoneValid(phone)) {
         throw new Error("Enter a valid 10 digit mobile number.");
       }
 
-      if (!city) throw new Error("Enter your city or district.");
-      if (!skills) throw new Error("Enter your photography / videography skills.");
+      if (city.length < 2) {
+        throw new Error("Enter your city or district.");
+      }
+
+      if (skills.length < 2) {
+        throw new Error("Enter your photography / videography skills.");
+      }
 
       if (!$("partnerAgreement")?.checked) {
         throw new Error("Please accept the partner agreement.");
       }
 
-      button.disabled = true;
-      button.textContent = "Submitting...";
+      setButtonLoading(button, true, "Register");
 
       const data = await request("/api/auth/partner-register", {
         name,
         email,
         phone,
         city,
-        skills,
-        role:"partner"
+        skills
       });
 
       message(
         data.message ||
-        "Application submitted. Admin approval is required before partner access."
+        "Application submitted. Please wait for admin approval."
       );
 
     } catch (error) {
       message(error.message, true);
     } finally {
-      button.disabled = false;
-      button.textContent = "Register & Verify Email";
+      setButtonLoading(button, false, "Register");
     }
-  };
-}
+  }
 
-// ======================================
-// ADMIN LOGIN
-// ======================================
+  /* =========================================
+     ADMIN LOGIN
+     ========================================= */
 
-if ($("adminLogin")) {
-  $("adminLogin").onclick = async () => {
+  async function adminLogin() {
+    const button = $("adminLogin");
+
     try {
-      const email = $("adminEmail").value.trim();
-      const password = $("adminPassword").value;
+      const email = $("adminEmail")?.value.trim() || "";
+      const password = $("adminPassword")?.value || "";
 
       if (!email || !password) {
         throw new Error("Enter admin email and password.");
       }
+
+      setButtonLoading(button, true, "Login");
 
       const data = await request("/api/auth/admin-login", {
         email,
         password
       });
 
-      if (!data.token) throw new Error("Admin login failed.");
+      if (!data.token) {
+        throw new Error("Admin login failed.");
+      }
 
       await saveLogin(data);
 
     } catch (error) {
       message(error.message, true);
+    } finally {
+      setButtonLoading(button, false, "Login");
     }
-  };
-}
+  }
 
-// ======================================
-// SAVE LOGIN
-// ======================================
+  /* =========================================
+     LOGIN AND LOGOUT
+     ========================================= */
 
-async function saveLogin(data) {
-  token = data.token;
-  localStorage.setItem("cb_token", token);
+  async function saveLogin(data) {
+    token = data.token;
+    localStorage.setItem("cb_token", token);
 
-  me = data.user || null;
+    me = data.user || null;
 
-  closeModal();
-  await dashboard();
-}
+    closeModal();
+    await dashboard();
+  }
 
-// ======================================
-// LOGOUT
-// ======================================
-
-if ($("logoutBtn")) {
-  $("logoutBtn").onclick = () => {
+  function logout() {
     token = "";
     me = null;
     selectedService = null;
@@ -545,106 +540,175 @@ if ($("logoutBtn")) {
     $("publicWebsite")?.classList.remove("hidden");
 
     closeModal();
-    window.scrollTo({top:0,behavior:"smooth"});
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
 
     toast("Logged out successfully.");
-  };
-}
-
-// ======================================
-// DASHBOARD COMMON
-// ======================================
-
-function showDashboard(title, account) {
-  $("publicWebsite")?.classList.add("hidden");
-  $("dashboard")?.classList.remove("hidden");
-
-  if ($("dashboardTitle")) {
-    $("dashboardTitle").textContent = title;
   }
 
-  if ($("accountInfo")) {
-    $("accountInfo").textContent = account || "";
+  /* =========================================
+     SERVICE CATALOGUE
+     ========================================= */
+
+  function renderServices(list = SERVICES) {
+    const grid = $("serviceCatalogGrid");
+    if (!grid) return;
+
+    grid.innerHTML = list.map(service => `
+      <article class="card service-card">
+        <div class="service-card-content">
+          <span class="status">${escapeHtml(service.category)}</span>
+          <h3>${escapeHtml(service.name)}</h3>
+          <p>${escapeHtml(service.description)}</p>
+          <p class="service-price">Price: Confirm with admin</p>
+          <button type="button" class="btn"
+            data-catalog-service="${service.id}">
+            Select Service
+          </button>
+        </div>
+      </article>
+    `).join("") || "<p>No services found.</p>";
   }
 
-  $("customerDash")?.classList.add("hidden");
-  $("partnerDash")?.classList.add("hidden");
-  $("adminDash")?.classList.add("hidden");
+  function filterServices() {
+    const search = ($("serviceSearch")?.value || "").toLowerCase();
 
-  $("dashboard")?.scrollIntoView({behavior:"smooth"});
-}
+    const activeFilter = document.querySelector(
+      "#serviceFilters [data-category].active"
+    );
 
-// ======================================
-// DASHBOARD LOGIN CHECK
-// ======================================
+    const category = activeFilter?.dataset.category || "all";
 
-async function dashboard() {
-  try {
-    const data = await request("/api/me", null, "GET");
-    me = data.user || data;
+    const filtered = SERVICES.filter(service => {
+      const matchesSearch =
+        service.name.toLowerCase().includes(search) ||
+        service.description.toLowerCase().includes(search);
 
-    if (me.role === "customer") {
-      await customerDashboard();
-    } else if (me.role === "partner") {
-      await partnerDashboard();
-    } else if (me.role === "admin") {
-      await adminDashboard();
-    } else {
-      throw new Error("Account role not recognized.");
+      const matchesCategory =
+        category === "all" || service.category === category;
+
+      return matchesSearch && matchesCategory;
+    });
+
+    renderServices(filtered);
+  }
+
+  function selectService(id) {
+    selectedService =
+      SERVICES.find(service => String(service.id) === String(id)) ||
+      SERVICES.find(service =>
+        service.name.toLowerCase() === String(id).toLowerCase()
+      ) ||
+      null;
+
+    if (!selectedService) {
+      toast("Service not found.");
+      return;
     }
 
-  } catch (error) {
-    token = "";
-    me = null;
-    localStorage.removeItem("cb_token");
+    if ($("selectedServiceName")) {
+      $("selectedServiceName").textContent = selectedService.name;
+    }
 
-    $("dashboard")?.classList.add("hidden");
-    $("publicWebsite")?.classList.remove("hidden");
+    if ($("selectedServiceDescription")) {
+      $("selectedServiceDescription").textContent =
+        selectedService.description;
+    }
 
-    toast(error.message);
-  }
-}
+    if ($("selectedServicePrice")) {
+      $("selectedServicePrice").textContent = "Price confirmed by admin";
+    }
 
-// ======================================
-// CUSTOMER DASHBOARD
-// ======================================
+    if ($("bookingService")) {
+      $("bookingService").value = selectedService.name;
+    }
 
-async function customerDashboard() {
-  showDashboard(
-    "Customer Dashboard",
-    "Welcome " + (me.name || "") + " · " + (me.phone || "")
-  );
+    $("selectedServicePanel")?.classList.remove("hidden");
+    $("bookingFormPanel")?.classList.remove("hidden");
 
-  $("customerDash")?.classList.remove("hidden");
+    if (!token) {
+      showTab("customer");
+      openModal();
+      message("Please login before submitting your booking.");
+      return;
+    }
 
-  renderServices();
-
-  if ($("bookingDate")) {
-    const today = new Date();
-    const localToday = new Date(
-      today.getTime() - today.getTimezoneOffset() * 60000
-    ).toISOString().slice(0,10);
-
-    $("bookingDate").min = localToday;
+    $("bookingFormPanel")?.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
   }
 
-  if (selectedService && $("bookingService")) {
-    $("bookingService").value = selectedService.name;
+  /* =========================================
+     DASHBOARD
+     ========================================= */
+
+  function showDashboard(title, account) {
+    $("publicWebsite")?.classList.add("hidden");
+    $("dashboard")?.classList.remove("hidden");
+
+    if ($("dashboardTitle")) {
+      $("dashboardTitle").textContent = title;
+    }
+
+    if ($("accountInfo")) {
+      $("accountInfo").textContent = account || "";
+    }
+
+    $("customerDash")?.classList.add("hidden");
+    $("partnerDash")?.classList.add("hidden");
+    $("adminDash")?.classList.add("hidden");
+
+    $("dashboard")?.scrollIntoView({
+      behavior: "smooth"
+    });
   }
 
-  updatePriceSummary();
+  async function dashboard() {
+    try {
+      const data = await request("/api/me", null, "GET");
+      me = data.user || data;
 
-  if ($("createBooking")) {
-    $("createBooking").onclick = submitBooking;
+      if (me.role === "customer") {
+        await customerDashboard();
+      } else if (me.role === "partner") {
+        await partnerDashboard();
+      } else if (me.role === "admin") {
+        await adminDashboard();
+      } else {
+        throw new Error("Account role not recognized.");
+      }
+
+    } catch (error) {
+      token = "";
+      me = null;
+
+      localStorage.removeItem("cb_token");
+
+      $("dashboard")?.classList.add("hidden");
+      $("publicWebsite")?.classList.remove("hidden");
+
+      toast(error.message);
+    }
   }
 
-  await loadCustomerBookings();
-}
+  /* =========================================
+     CUSTOMER DASHBOARD
+     ========================================= */
 
-// ======================================
-// PRICE SUMMARY
-// ======================================
+  async function customerDashboard() {
+    showDashboard(
+      "Customer Dashboard",
+      "Welcome " + (me.name || "") + " · " + (me.phone || "")
+    );
 
-function updatePriceSummary() {
-  // Actual service prices and discount calculations must come
-  // from the backend
+    $("customerDash")?.classList.remove("hidden");
+
+    renderServices();
+
+    if ($("bookingDate")) {
+      const today = new Date();
+    
