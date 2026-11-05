@@ -232,7 +232,7 @@
   function bindEvents() {
     document.addEventListener("click", event => {
       const target = event.target;
-
+       alert("CLICK EVENT WORKING");
       const close = target.closest("#closeModal");
       if (close) {
         closeModal();
